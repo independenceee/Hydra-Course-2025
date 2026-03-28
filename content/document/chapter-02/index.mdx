@@ -1,4 +1,165 @@
 ---
-title: Running Hydra Nodes
-description: Installing, Configuring, and Operating Your First Hydra Head
+title: Vận hành Hydra Node
+description: Cài đặt, cấu hình và vận hành Hydra Node, đồng thời khởi chạy Hydra Head đầu tiên của bạn.
 ---
+
+## 📘 Giới thiệu
+
+Sau khi đã nắm được các khái niệm nền tảng về Hydra và hoàn thành việc chuẩn bị môi trường trong chương trước, chương này sẽ đưa bạn vào giai đoạn thực hành – nơi bạn trực tiếp làm việc với Hydra Node và vận hành hệ thống trong thực tế.
+
+Bạn sẽ bắt đầu từ việc cài đặt và cấu hình Hydra Node, sau đó khởi chạy Hydra Head đầu tiên, thực hiện các giao dịch off-chain và quan sát cách hệ thống hoạt động. Đây là bước chuyển quan trọng từ việc “hiểu lý thuyết” sang “triển khai thực tế”.
+
+Ngoài ra, chương này cũng giúp bạn làm quen với các lỗi phổ biến khi làm việc với Hydra và cách xử lý chúng một cách hiệu quả. Việc hiểu và debug được hệ thống là kỹ năng quan trọng khi phát triển các ứng dụng blockchain.
+
+---
+
+## 🎯 Mục tiêu
+
+Sau khi hoàn thành chương này, bạn sẽ có thể:
+
+- Cài đặt và cấu hình Hydra Node một cách chính xác
+- Hiểu quy trình khởi chạy và vận hành Hydra Head
+- Thực hiện các giao dịch off-chain trong Hydra
+- Phân biệt rõ hoạt động giữa on-chain và off-chain
+- Nhận diện và xử lý các lỗi phổ biến khi làm việc với Hydra
+- Tự tin vận hành một hệ thống Hydra cơ bản
+
+---
+
+## 📚 Nội dung chương
+
+### 3.1 Cài đặt và cấu hình Hydra Node
+
+**Hướng dẫn từng bước thiết lập Hydra Node dành cho người mới**
+
+Trong phần này, bạn sẽ bắt đầu làm việc trực tiếp với Hydra bằng cách cài đặt và cấu hình một Hydra Node hoàn chỉnh. Đây là bước chuyển từ lý thuyết sang thực hành, nơi bạn thiết lập môi trường để Hydra có thể hoạt động cùng với Cardano.
+
+Bạn sẽ thực hiện:
+
+- Tải Hydra Node (binary hoặc build từ source)
+- Cấu hình các tham số cần thiết
+- Kết nối Hydra Node với Cardano Node thông qua `node.socket`
+- Thiết lập các file cấu hình và thư mục làm việc
+
+Ngoài ra, bạn sẽ hiểu rõ vai trò của từng thành phần trong quá trình khởi động Hydra Node, bao gồm:
+
+- Network configuration
+- Key files (payment key, signing key)
+- Các tham số runtime
+
+👉 Sau phần này, bạn sẽ có một Hydra Node sẵn sàng để khởi chạy Hydra Head.
+
+---
+
+### 3.2 Chạy Hydra Head đầu tiên
+
+**Khởi chạy, quản lý và quan sát hoạt động on-chain & off-chain**
+
+Đây là phần quan trọng nhất của chương, nơi bạn thực sự khởi chạy một Hydra Head và quan sát cách nó hoạt động.
+
+Bạn sẽ học cách:
+
+- Khởi tạo Hydra Head
+- Thêm participants vào Head
+- Commit UTXO vào Hydra
+- Thực hiện giao dịch off-chain
+- Quan sát trạng thái và snapshot
+
+Trong quá trình này, bạn sẽ thấy rõ sự khác biệt giữa:
+
+- **On-chain**:
+    - Commit UTXO
+    - Đóng Head
+    - Ghi nhận trạng thái cuối
+
+- **Off-chain**:
+    - Giao dịch nhanh giữa các participant
+    - Cập nhật trạng thái liên tục
+    - Không cần ghi lên blockchain ngay lập tức
+
+👉 Đây chính là điểm mạnh cốt lõi của Hydra:  
+**tốc độ cao + chi phí thấp + vẫn đảm bảo bảo mật**
+
+---
+
+### 3.3 Xử lý lỗi Hydra Node
+
+**Hiểu các lỗi phổ biến và cách khắc phục hiệu quả**
+
+Khi làm việc với Hydra, bạn sẽ gặp một số lỗi phổ biến do cấu hình sai hoặc môi trường chưa chuẩn. Phần này giúp bạn nhận diện và xử lý các lỗi đó một cách có hệ thống.
+
+Một số lỗi thường gặp:
+
+#### ❌ Không kết nối được Cardano Node
+
+- Sai `CARDANO_NODE_SOCKET_PATH`
+- Node chưa chạy hoặc chưa sync
+
+#### ❌ Hydra Head không khởi tạo được
+
+- Sai key hoặc thiếu participant
+- Cấu hình network chưa đúng
+
+#### ❌ Giao dịch không thực hiện được
+
+- UTXO chưa commit
+- Sai địa chỉ hoặc key
+
+#### ❌ Lỗi permission
+
+- Không có quyền truy cập file hoặc socket
+
+---
+
+### 🛠️ Cách tiếp cận xử lý lỗi
+
+- Kiểm tra log của Hydra Node
+- Xác nhận Cardano Node đang chạy và sync 100%
+- Kiểm tra lại toàn bộ biến môi trường
+- Debug từng bước thay vì chạy toàn bộ flow
+
+👉 Phần này giúp bạn tiết kiệm rất nhiều thời gian khi làm việc thực tế.
+
+---
+
+### 3.4 Tổng kết và chuẩn bị
+
+**Tóm tắt kiến thức và chuẩn bị cho việc phát triển Hydra DApp**
+
+Sau khi hoàn thành các bước cài đặt và vận hành Hydra, bạn sẽ tổng hợp lại những kiến thức quan trọng đã học:
+
+- Quy trình cài đặt Hydra Node
+- Cách Hydra Head hoạt động
+- Sự khác biệt giữa on-chain và off-chain
+- Các lỗi phổ biến và cách xử lý
+
+Bên cạnh đó, bạn cũng sẽ chuẩn bị cho bước tiếp theo:
+
+- Xây dựng ứng dụng thực tế (Hydra DApp)
+- Tích hợp frontend với Hydra
+- Xây dựng logic off-chain nâng cao
+
+---
+
+## 🚀 Kết luận chương
+
+Sau khi hoàn thành chương này, bạn sẽ:
+
+- Tự cài đặt và chạy được Hydra Node
+- Hiểu cách mở và vận hành Hydra Head
+- Thực hiện được giao dịch off-chain
+- Có khả năng debug và xử lý lỗi cơ bản
+
+👉 Đây là bước chuyển quan trọng từ “hiểu Hydra” sang “làm chủ Hydra”.
+
+---
+
+## 🔜 Tiếp theo
+
+Ở chương tiếp theo, bạn sẽ:
+
+- Xây dựng Hydra DApp đầu tiên
+- Kết nối frontend với Hydra Node
+- Thiết kế luồng giao dịch thực tế
+
+👉 Bắt đầu bước vào giai đoạn phát triển ứng dụng hoàn chỉnh 🚀

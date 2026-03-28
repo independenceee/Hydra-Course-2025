@@ -1,4 +1,163 @@
 ---
-title: Giới thiệu về Hydra
-description: Khám phá tương lai của khả năng mở rộng Layer-2 trên Cardano và các ứng dụng thực tế
+title: Bắt đầu với Hydra
+description: Tìm hiểu giải pháp mở rộng Layer-2 trên Cardano và chuẩn bị môi trường phát triển để làm việc với Hydra.
 ---
+
+## 📘 Tổng quan
+
+Trong chương này, bạn sẽ được giới thiệu về Hydra – một giải pháp mở rộng Layer-2 mạnh mẽ trên Cardano, được thiết kế nhằm tăng thông lượng giao dịch và giảm độ trễ.
+
+Chương học không chỉ dừng lại ở lý thuyết mà còn hướng dẫn bạn chuẩn bị môi trường phát triển một cách đầy đủ và bài bản. Bạn sẽ hiểu cách Hydra hoạt động, cách nó tích hợp với Cardano và cách thiết lập hệ thống để bắt đầu xây dựng ứng dụng thực tế.
+
+Hydra không chỉ là một công nghệ scaling, mà còn là một cách tiếp cận mới trong việc xử lý logic off-chain và quản lý trạng thái ngoài blockchain.
+
+---
+
+## 🎯 Mục tiêu
+
+Sau khi hoàn thành chương này, bạn sẽ có thể:
+
+- Hiểu vai trò của Layer-2 trong việc mở rộng blockchain
+- Giải thích cách Hydra cải thiện hiệu năng của Cardano
+- Nắm được các thành phần chính trong kiến trúc Hydra
+- Thiết lập môi trường phát triển hoàn chỉnh cho Hydra
+- Cài đặt và cấu hình làm nền tảng cho hệ thống
+
+---
+
+## 📚 Nội dung chương
+
+### 2.1 Giới thiệu về Hydra
+
+**Khám phá tương lai của Layer-2 trên Cardano và các ứng dụng thực tế**
+
+Trong phần này, bạn sẽ được làm quen với Hydra – một giải pháp mở rộng Layer-2 tiên tiến trong hệ sinh thái Cardano. Khi blockchain ngày càng được ứng dụng rộng rãi, các vấn đề về hiệu năng như tốc độ xử lý giao dịch chậm, phí cao và khả năng mở rộng hạn chế trở thành những rào cản lớn. Hydra được thiết kế để giải quyết trực tiếp những vấn đề này.
+
+Cụ thể, Hydra cho phép xử lý giao dịch **off-chain** (ngoài blockchain chính) nhưng vẫn đảm bảo tính bảo mật và toàn vẹn dữ liệu thông qua cơ chế liên kết với on-chain. Điều này giúp tăng thông lượng giao dịch lên rất cao, đồng thời giảm độ trễ xuống mức gần như thời gian thực.
+
+Bên cạnh lý thuyết, bạn cũng sẽ khám phá các ứng dụng thực tế của Hydra như:
+
+- Micropayment (thanh toán vi mô với chi phí thấp)
+- Gaming (xử lý trạng thái game theo thời gian thực)
+- Streaming payment (trả tiền theo thời gian sử dụng)
+- Các hệ thống yêu cầu phản hồi nhanh như trading hoặc social apps
+
+👉 Qua phần này, bạn sẽ hiểu rõ vì sao Hydra là một bước tiến quan trọng trong việc mở rộng Cardano.
+
+---
+
+### 2.2 Kiến trúc Hydra chuyên sâu
+
+**Cách Hydra Head, Participants và Channels phối hợp hoạt động**
+
+Phần này đi sâu vào kiến trúc bên trong của Hydra, giúp bạn hiểu cách hệ thống vận hành ở mức kỹ thuật.
+
+Bạn sẽ tìm hiểu các thành phần cốt lõi:
+
+- **Hydra Head**:  
+  Là một môi trường xử lý giao dịch off-chain riêng biệt giữa một nhóm participant. Mỗi Head hoạt động như một “mini-ledger” có tốc độ cao.
+
+- **Participants**:  
+  Các bên tham gia vào Hydra Head, cùng nhau xác nhận và cập nhật trạng thái. Tất cả các participant đều phải đồng thuận về trạng thái mới.
+
+- **Channels / State Channel**:  
+  Cơ chế duy trì trạng thái off-chain, cho phép các giao dịch diễn ra nhanh chóng mà không cần ghi trực tiếp lên blockchain.
+
+Bạn cũng sẽ hiểu cách Hydra đảm bảo an toàn thông qua:
+
+- Cơ chế commit UTXO từ on-chain vào Hydra Head
+- Snapshot trạng thái giữa các participant
+- Cách đóng Head và ghi kết quả cuối cùng lên blockchain
+
+👉 Hydra kết hợp được tốc độ của off-chain và tính bảo mật của on-chain.
+
+---
+
+### 2.3 Thiết lập môi trường phát triển Hydra
+
+**Công cụ, dependencies và các best practices**
+
+Đây là phần mang tính thực hành, nơi bạn bắt đầu chuẩn bị môi trường để làm việc với Hydra.
+
+Bạn sẽ cài đặt và làm quen với các thành phần cần thiết như:
+
+- Các công cụ dòng lệnh (CLI)
+- Thư viện hỗ trợ phát triển
+- Môi trường Linux (Ubuntu hoặc VPS)
+- Các công cụ xử lý dữ liệu như `jq`, `curl`, `git`
+
+Ngoài ra, bạn cũng sẽ học cách:
+
+- Cấu hình biến môi trường (environment variables)
+- Quản lý thư mục làm việc
+- Kiểm tra và debug hệ thống
+
+#### 💡 Best Practices
+
+- Luôn cập nhật hệ thống trước khi cài đặt
+- Sử dụng đường dẫn tuyệt đối thay vì tương đối
+- Kiểm tra từng bước thay vì chạy toàn bộ script
+- Tách biệt môi trường dev / test / production
+
+👉 Phần này giúp bạn tránh được rất nhiều lỗi phổ biến khi làm việc với Hydra.
+
+---
+
+### 2.4 Cài đặt và cấu hình Cardano Node
+
+**Xây dựng nền tảng cho Hydra hoạt động**
+
+Hydra không hoạt động độc lập mà phụ thuộc trực tiếp vào Cardano Node, vì vậy việc cài đặt và cấu hình node là bước cực kỳ quan trọng.
+
+Trong phần này, bạn sẽ thực hiện:
+
+#### 🔧 Cài đặt Cardano Node
+
+- Tải binary hoặc build từ source
+- Cấu hình network (testnet hoặc mainnet)
+- Thiết lập thư mục lưu trữ blockchain
+
+#### 🔄 Đồng bộ blockchain
+
+- Hiểu quá trình sync dữ liệu
+- Theo dõi tiến trình thông qua `syncProgress`
+- Đảm bảo node đạt 100% trước khi sử dụng
+
+#### 🔌 Cấu hình kết nối
+
+- Thiết lập `node.socket`
+- Cấu hình biến `CARDANO_NODE_SOCKET_PATH`
+- Kiểm tra kết nối với `cardano-cli`
+
+#### 🧪 Kiểm tra hoạt động
+
+- Query tip của node
+- Kiểm tra UTXO
+- Đảm bảo node hoạt động ổn định
+
+---
+
+### ⚠️ Lưu ý quan trọng
+
+- Nếu node chưa sync → Hydra không thể hoạt động
+- Nếu cấu hình sai socket → không thể giao tiếp
+- Nếu thiết lập sai môi trường → dễ gặp lỗi runtime
+
+👉 Cardano Node chính là nền tảng cốt lõi của toàn bộ hệ thống Hydra.
+
+---
+
+## 🚀 Kết luận chương
+
+Sau khi hoàn thành chương này, bạn sẽ:
+
+- Hiểu rõ Hydra hoạt động như thế nào
+- Nắm được kiến trúc tổng thể của hệ thống
+- Chuẩn bị xong môi trường phát triển
+- Có một Cardano Node sẵn sàng để chạy Hydra
+
+👉 Đây là bước đệm quan trọng trước khi bạn bước vào phần thực hành:
+
+- Mở Hydra Head
+- Thực hiện giao dịch off-chain
+- Xây dựng ứng dụng thực tế

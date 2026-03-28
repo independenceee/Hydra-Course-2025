@@ -55,7 +55,7 @@ export default function Header() {
                                     animate={{ opacity: 1 }}
                                     transition={{ delay: 0.2, duration: 0.5 }}
                                 >
-                                    Hydra Tutorial
+                                    Hydra Course 2025
                                 </motion.h3>
                             </Link>
                         </motion.section>
@@ -99,7 +99,7 @@ export default function Header() {
                         >
                             <section className="hidden xl:block">
                                 <Link
-                                    href={routers.document}
+                                    href="/document/chapter-01"
                                     className="inline-flex items-center gap-2 rounded-sm border border-white/30 bg-gray-800/50 px-4 py-2 text-sm font-medium text-white shadow-lg transition-all duration-200 hover:border-white/50 hover:bg-gray-700/50"
                                 >
                                     <span>Documents</span>
