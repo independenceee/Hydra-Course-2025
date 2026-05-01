@@ -31,8 +31,6 @@ Cuối cùng, mục tiêu quan trọng là giúp người đọc có đủ nền
 
 Trong hệ thống TipJar được xây dựng trên nền tảng Cardano kết hợp với Hydra, việc phân tách kiến trúc thành hai lớp On-chain và Off-chain là yếu tố cốt lõi giúp đạt được cả hai mục tiêu: đảm bảo tính bảo mật và tối ưu hiệu năng. Mỗi lớp đảm nhiệm một vai trò riêng biệt, nhưng đồng thời phải phối hợp chặt chẽ để tạo thành một hệ thống hoàn chỉnh.
 
-![01](./assets/01.png)
-
 ### 🔐 1. Kiến trúc On-chain (Smart Contract)
 
 Lớp On-chain trong hệ thống TipJar được triển khai trực tiếp trên blockchain Cardano, đóng vai trò là nền tảng đảm bảo tính bảo mật, minh bạch và tính đúng đắn của toàn bộ ứng dụng. Thành phần cốt lõi của lớp này là smart contract (validator), được viết bằng Aiken (hoặc Plutus), chịu trách nhiệm xác thực các giao dịch liên quan đến TipJar.
@@ -55,8 +53,6 @@ Ngoài ra, khi Hydra Head được đóng (close), backend sẽ thực hiện vi
 
 ### 🔄 3. Sự phối hợp giữa On-chain và Off-chain
 
-![02](./assets/02.png)
-
 Kiến trúc TipJar trên Cardano và Hydra không phải là hai hệ thống tách biệt, mà là một mô hình kết hợp (hybrid) giữa On-chain và Off-chain. Sự phối hợp giữa hai lớp này là yếu tố quyết định đến tính hiệu quả và độ tin cậy của toàn bộ ứng dụng.
 
 Trong quá trình vận hành, các giao dịch được xử lý chủ yếu trong Hydra Head để tận dụng tốc độ và chi phí thấp. Tuy nhiên, mọi transaction được tạo ra ở lớp Off-chain đều phải tuân thủ các quy tắc đã được định nghĩa trong smart contract On-chain. Điều này có nghĩa là backend phải “xây dựng đúng ngay từ đầu”, đảm bảo rằng transaction sẽ hợp lệ nếu được đưa lên blockchain.
@@ -66,8 +62,6 @@ Khi Hydra Head đóng lại, trạng thái cuối cùng của TipJar sẽ đư�
 Sự phối hợp này giúp đạt được sự cân bằng giữa hiệu năng và bảo mật: Off-chain xử lý nhanh, On-chain đảm bảo đúng.
 
 ### 🚀 4. Lợi ích của mô hình kiến trúc
-
-![03](./assets/03.png)
 
 Việc phân tách hệ thống thành hai lớp On-chain và Off-chain mang lại nhiều lợi ích đáng kể cho ứng dụng TipJar. Trước hết, nó giúp giảm tải cho blockchain chính, vì phần lớn giao dịch được xử lý trong Hydra thay vì gửi trực tiếp lên layer 1. Điều này không chỉ giảm chi phí mà còn cải thiện đáng kể tốc độ phản hồi.
 
@@ -80,8 +74,6 @@ Cuối cùng, mô hình này mang lại khả năng mở rộng tốt hơn. Khi 
 ## Thiết kế kiến trúc và luồng hoạt động của DApp TipJar trên Hydra
 
 Hệ thống TipJar được thiết kế theo mô hình phân lớp rõ ràng, bao gồm ba tầng chính: User Layer, Off-chain Application Layer và On-chain Cardano Layer. Kiến trúc này cho phép tách biệt giữa phần tương tác người dùng, xử lý logic ứng dụng và đảm bảo bảo mật trên blockchain, đồng thời tận dụng sức mạnh của Hydra để tối ưu hiệu năng.
-
-![04](./assets/04.png)
 
 ### 👤 1. User Layer (Frontend & Wallet)
 
