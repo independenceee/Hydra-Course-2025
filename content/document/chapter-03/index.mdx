@@ -5,11 +5,35 @@ description: Từ các nguyên tắc kiến trúc đến lập kế hoạch quy 
 
 ## 📘 Giới thiệu
 
+Trong quá trình xây dựng DApp trên Cardano, một trong những thách thức lớn nhất là cân bằng giữa hiệu suất, chi phí giao dịch và trải nghiệm người dùng. Khi số lượng người dùng tăng lên, việc xử lý toàn bộ logic trên Layer 1 có thể dẫn đến độ trễ cao và chi phí không tối ưu.
+
+Hydra – giải pháp Layer 2 của Cardano – được thiết kế để giải quyết vấn đề này bằng cách cho phép xử lý giao dịch ngoài chuỗi (off-chain) với tốc độ cao và chi phí thấp, đồng thời vẫn đảm bảo tính bảo mật dựa trên Layer 1.
+
+Chương này sẽ tập trung vào cách thiết kế một DApp tận dụng Hydra một cách hiệu quả, từ kiến trúc hệ thống đến cách tổ chức luồng xử lý, giúp bạn xây dựng các ứng dụng có khả năng mở rộng tốt và mang lại trải nghiệm mượt mà cho người dùng.
+
 ---
 
-
 ### 🎯 Mục tiêu
+
+Sau khi hoàn thành chương này, bạn sẽ có thể:
+
+- Hiểu rõ vai trò của Hydra trong kiến trúc DApp trên Cardano
+- Phân biệt được khi nào nên xử lý on-chain và khi nào nên sử dụng Hydra
+- Thiết kế kiến trúc DApp kết hợp giữa Layer 1 và Layer 2
+- Xây dựng luồng xử lý giao dịch tối ưu cho hiệu suất và chi phí
+- Nâng cao trải nghiệm người dùng thông qua xử lý nhanh và phản hồi gần như tức thì
 
 ---
 
 ### 📚 Nội dung chương
+
+Chương này bao gồm các phần chính:
+
+1. Tổng quan kiến trúc DApp với Hydra
+2. Phân tách logic: On-chain vs Off-chain vs Hydra
+3. Thiết kế luồng giao dịch và quản lý trạng thái
+4. Tối ưu hiệu suất và chi phí khi sử dụng Hydra
+5. Các mô hình ứng dụng thực tế (Game, Payment, Micro-transactions)
+6. Những lưu ý và best practices khi triển khai
+
+---
