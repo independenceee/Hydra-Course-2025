@@ -38,8 +38,6 @@ Cuối cùng, chúng ta sẽ kết nối smart contract này với phần off-ch
 
 Trước khi bắt tay vào việc viết code, điều quan trọng nhất là phải xác định rõ các yêu cầu và phạm vi hoạt động của smart contract TipJar. Đây là bước nền tảng giúp chúng ta xây dựng một validator đơn giản nhưng chặt chẽ, tránh những sai sót logic có thể dẫn đến mất tài sản hoặc hành vi không mong muốn.
 
-![01](/assets/01.png)
-
 Về bản chất, TipJar là một dạng contract lưu trữ giá trị (value-holding contract) hoạt động theo mô hình UTxO. Người dùng có thể gửi ADA vào contract như một hành động “ủng hộ”, và số tiền này sẽ được giữ trong một UTxO được khóa bởi validator. Do đó, thiết kế của contract cần đảm bảo ba nguyên tắc cốt lõi: mở cho việc gửi tiền, giới hạn quyền rút tiền, và duy trì tính toàn vẹn của trạng thái.
 
 Yêu cầu đầu tiên là cho phép người dùng gửi tiền tip vào một địa chỉ cụ thể. Trong ngữ cảnh của Cardano, điều này tương đương với việc gửi một transaction đến địa chỉ script (script address) của TipJar. Điểm đáng chú ý là hành động này không cần bất kỳ logic xác thực phức tạp nào từ validator, vì việc “gửi vào” chỉ đơn giản là tạo một UTxO mới tại địa chỉ của contract. Điều này giúp giảm chi phí và tăng hiệu suất, đặc biệt khi chạy trong môi trường Hydra.
