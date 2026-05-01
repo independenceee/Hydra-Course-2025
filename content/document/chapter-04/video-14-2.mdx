@@ -890,7 +890,7 @@ Cụ thể, hàm sử dụng hydraProvider.fetchUTxOs(txHash, outputIndex) để
 
 Tiếp theo, hệ thống kiểm tra trạng thái của Hydra Head thông qua hydraProvider.getStatus(). Chỉ khi trạng thái là OPEN thì việc rút tài sản mới được phép thực hiện. Nếu một trong hai điều kiện không thỏa mãn (UTXO không tồn tại hoặc Head không ở trạng thái OPEN), hàm sẽ throw lỗi để ngăn chặn hành động không hợp lệ.
 
-Khi tất cả điều kiện đều hợp lệ, hàm sẽ gọi hydraTxBuilder.decommit({ utxo }) để thực hiện giao dịch rút tài sản. Lúc này, UTXO sẽ được chuyển từ Hydra về lại Layer 1 theo đúng quy trình của hệ thống.
+Khi tất cả điều kiện đều hợp lệ, hàm sẽ gọi `hydraTxBuilder.decommit({ utxo })` để thực hiện giao dịch rút tài sản. Lúc này, UTXO sẽ được chuyển từ Hydra về lại Layer 1 theo đúng quy trình của hệ thống.
 
 Tóm lại, hàm decommit không chỉ thực hiện việc rút tài sản mà còn đảm bảo tính an toàn bằng cách kiểm tra đầy đủ trạng thái của Hydra và sự tồn tại của UTXO. Đây là bước quan trọng để tránh lỗi và đảm bảo tính nhất quán giữa Layer 2 và Layer 1 trong quá trình vận hành DApp.
 

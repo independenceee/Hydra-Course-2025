@@ -64,7 +64,7 @@ const { data: utxosCommit, isLoading: isLoadingUtxosCommit } = useQuery({
 
 Ở đây, queryKey bao gồm cả address, giúp đảm bảo mỗi khi địa chỉ ví thay đổi thì dữ liệu sẽ được refetch lại tương ứng. Hàm queryFn gọi đến getUTxOsCommit để lấy danh sách UTXO từ Layer 1. Đặc biệt, thuộc tính enabled: !!address đảm bảo rằng query chỉ được thực thi khi address tồn tại (tức là người dùng đã kết nối ví), tránh việc gọi API không cần thiết hoặc gây lỗi khi chưa có dữ liệu đầu vào hợp lệ.
 
-Sau khi dữ liệu được trả về, danh sách UTXO sẽ được render lên UI dưới dạng các <option> trong một dropdown:
+Sau khi dữ liệu được trả về, danh sách UTXO sẽ được render lên UI dưới dạng các option trong một dropdown:
 
 ```ts
 {utxosCommit?.map((utxo) => {
@@ -567,7 +567,7 @@ Tổng thể, Close & Fanout là bước quan trọng nhất trong vòng đời 
 
 ### 🚀 1. Truy cập ứng dụng
 
-Người dùng bắt đầu bằng việc mở trình duyệt và truy cập vào địa chỉ của hệ thống. Trong quá trình phát triển, ứng dụng thường được chạy ở môi trường local với đường dẫn http://localhost:3000. Khi triển khai thực tế lên server hoặc VPS, người dùng sẽ truy cập thông qua domain hoặc địa chỉ IP tương ứng như http://<domain hoặc IP>.
+Người dùng bắt đầu bằng việc mở trình duyệt và truy cập vào địa chỉ của hệ thống. Trong quá trình phát triển, ứng dụng thường được chạy ở môi trường local với đường dẫn http://localhost:3000. Khi triển khai thực tế lên server hoặc VPS, người dùng sẽ truy cập thông qua domain hoặc địa chỉ IP tương ứng như `http://domain`.
 
 Ngay sau khi trang web được tải, hệ thống sẽ tự động khởi tạo toàn bộ frontend và thực hiện bước kiểm tra trạng thái ban đầu của người dùng. Trong đó, quan trọng nhất là kiểm tra trạng thái kết nối ví blockchain. Ứng dụng sẽ xác định xem người dùng đã kết nối ví hay chưa thông qua các hook quản lý ví (ví dụ như useWallet).
 

@@ -64,7 +64,7 @@ const { data: utxosCommit, isLoading: isLoadingUtxosCommit } = useQuery({
 
 Ở đây, queryKey bao gồm cả address, giúp đảm bảo mỗi khi địa chỉ ví thay đổi thì dữ liệu sẽ được refetch lại tương ứng. Hàm queryFn gọi đến getUTxOsCommit để lấy danh sách UTXO từ Layer 1. Đặc biệt, thuộc tính enabled: !!address đảm bảo rằng query chỉ được thực thi khi address tồn tại (tức là người dùng đã kết nối ví), tránh việc gọi API không cần thiết hoặc gây lỗi khi chưa có dữ liệu đầu vào hợp lệ.
 
-Sau khi dữ liệu được trả về, danh sách UTXO sẽ được render lên UI dưới dạng các <option> trong một dropdown:
+Sau khi dữ liệu được trả về, danh sách UTXO sẽ được render lên UI dưới dạng các option trong một dropdown:
 
 ```ts
 {utxosCommit?.map((utxo) => {
@@ -626,4 +626,3 @@ Toàn bộ luồng xử lý của chức năng withdraw hoạt động theo mô 
 Tổng thể, chức năng này không chỉ giúp người dùng theo dõi lịch sử rút tiền một cách rõ ràng mà còn đóng vai trò quan trọng trong việc đảm bảo tính minh bạch và khả năng kiểm soát dòng tiền giữa Hydra và Layer 1 trong toàn bộ hệ thống.
 
 ---
-

@@ -63,9 +63,9 @@ Trong đó, UTxOs là tập hợp các đầu ra chưa được tiêu thụ tron
 
 Tiếp theo là collateral, một UTxO đặc biệt được dùng làm tài sản đảm bảo khi transaction tương tác với smart contract Plutus. Collateral chỉ được sử dụng trong trường hợp có script validation, nhằm đảm bảo nếu logic on-chain thất bại thì hệ thống vẫn có cơ chế xử lý rủi ro và phí phạt.
 
-Cuối cùng là walletAddress, địa chỉ ví của người dùng, đóng vai trò xác định người gửi giao dịch. Ngoài ra, nó còn được dùng để nhận lại phần ADA dư (change output) sau khi trừ phí và giá trị đã gửi.
+Cuối cùng là `walletAddress`, địa chỉ ví của người dùng, đóng vai trò xác định người gửi giao dịch. Ngoài ra, nó còn được dùng để nhận lại phần ADA dư (change output) sau khi trừ phí và giá trị đã gửi.
 
-Tổng thể, bước khởi tạo này giúp hệ thống chuẩn bị đầy đủ “đầu vào giao dịch” theo đúng mô hình UTxO của Cardano. Nếu thiếu một trong các thành phần như UTxO, collateral hoặc wallet address, transaction sẽ không thể được xây dựng hợp lệ hoặc có nguy cơ bị từ chối khi submit lên blockchain.
+Tổng thể, bước khởi tạo này giúp hệ thống chuẩn bị đầy đủ “đầu vào giao dịch” theo đúng mô hình UTxO của Cardano. Nếu thiếu một trong các thành phần như UTxO, collateral hoặc `wallet address`, transaction sẽ không thể được xây dựng hợp lệ hoặc có nguy cơ bị từ chối khi submit lên blockchain.
 
 #### 📦 2. Lấy trạng thái hiện tại từ smart contract
 
@@ -196,7 +196,7 @@ Sau khi đã xử lý logic cập nhật state ở bước trước, hệ thốn
 Quá trình thực hiện như sau:
 
 - Danh sách datumList (đã được cập nhật ở bước xử lý state) sẽ được duyệt qua từng phần tử
-- Mỗi record { address, amount } được encode lại thành dạng mConStr0([address, amount])
+- Mỗi record `{ address, amount }` được encode lại thành dạng mConStr0([address, amount])
 - Toàn bộ danh sách tiếp tục được bọc trong một constructor tổng mConStr0(...) để tạo cấu trúc datum hoàn chỉnh
 
 #### 🆕 7. Trường hợp chưa có UTxO (khởi tạo contract)
@@ -995,7 +995,7 @@ Sau khi decode, dữ liệu được chuyển về dạng dễ thao tác: 👉 �
 [{ address, amount }];
 ```
 
-🧠 3.2 Update logic tip
+##### 🧠 3.2 Update logic tip
 
 ```ts
 const existing = datum.find((d) => d.address === walletAddress);
@@ -1004,25 +1004,31 @@ const existing = datum.find((d) => d.address === walletAddress);
 👉 kiểm tra user đã tip chưa
 
 Nếu đã tồn tại:
+
+```ts
 existing.amount += Number(amount);
 Nếu chưa:
 datum.push({
 address: walletAddress,
 amount: Number(amount),
 });
+```
 
 👉 Đây là logic state machine:
 
 update user cũ
 hoặc thêm user mới
 
-🔥 3.3 Consume UTxO + update state
+##### 🔥 3.3 Consume UTxO + update state
+
+```ts
 unsignedTx
-.spendingPlutusScriptV3()
-.txIn(utxo.input.txHash, utxo.input.outputIndex)
-.txInScript(this.spendScriptCbor)
-.txInInlineDatumPresent()
-.txInRedeemerValue(mConStr0([]))
+    .spendingPlutusScriptV3()
+    .txIn(utxo.input.txHash, utxo.input.outputIndex)
+    .txInScript(this.spendScriptCbor)
+    .txInInlineDatumPresent()
+    .txInRedeemerValue(mConStr0([]));
+```
 
 👉 Ý nghĩa:
 
@@ -1031,20 +1037,23 @@ chạy validator
 lấy datum hiện tại
 gửi action “tip”
 
-💰 3.4 Tính lại tổng ADA
+##### 💰 3.4 Tính lại tổng ADA
+
+```ts
 .txOut(this.spendAddress, [
 {
-unit: "lovelace",
-quantity: String(
-utxo.output.amount.reduce((total, asset) => {
-if (asset.unit === "lovelace") {
-return total + Number(asset.quantity);
-}
-return total;
-}, Number(amount)),
-),
-},
+    unit: "lovelace",
+    quantity: String(
+        utxo.output.amount.reduce((total, asset) => {
+            if (asset.unit === "lovelace") {
+                return total + Number(asset.quantity);
+            }
+                return total;
+            }, Number(amount)),
+        ),
+    },
 ])
+```
 
 👉 Ý nghĩa:
 
@@ -1054,18 +1063,19 @@ tạo UTxO mới
 
 👉 Đây là state immutability (UTxO model)
 
-🧾 3.5 Encode datum mới
-.txOutInlineDatumValue(
-mConStr0(
-datum.map((d) =>
-mConStr0([d.address, d.amount])
-)
-)
+##### 🧾 3.5 Encode datum mới
+
+```ts
+.txOutInlineDatumValue(mConStr0(
+    datum.map((d) =>
+        mConStr0([d.address, d.amount])
+    )
+    )
 );
 
-👉 Lưu lại state mới lên blockchain:
+```
 
-[{ address, amount }]
+👉 Lưu lại state mới lên blockchain: `[{ address, amount }]`
 
 #### 🆕 4. Nếu chưa có UTxO (init state)
 
@@ -1079,7 +1089,7 @@ mConStr0([d.address, d.amount])
 
 Ở giai đoạn này, không có dữ liệu cũ để đọc hoặc cập nhật, nên toàn bộ state sẽ được tạo mới từ đầu.
 
-💰 4.1 Tạo UTxO mới tại smart contract
+##### 💰 4.1 Tạo UTxO mới tại smart contract
 
 ```ts
 .txOut(this.spendAddress, [
@@ -1098,9 +1108,9 @@ Hệ thống tạo một UTxO mới tại spendAddress (smart contract address) 
 - lovelace: đơn vị nhỏ nhất của ADA
 - amount: số tiền tip đầu tiên
 
-👉 Đây là bước “seed funding” cho contract.
+👉 Đây là bước seed funding cho contract.
 
-🧾 4.2 Khởi tạo datum (state ban đầu)
+##### 🧾 4.2 Khởi tạo datum state ban đầu
 
 ```ts
 .txOutInlineDatumValue(

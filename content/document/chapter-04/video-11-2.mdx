@@ -125,7 +125,7 @@ Tiếp theo, validator định nghĩa hai điều kiện quan trọng. Biến mu
 
 Cuối cùng, validator trả về kết quả của biểu thức must_say_hello && must_be_signed. Điều này có nghĩa là giao dịch chỉ được chấp nhận khi cả hai điều kiện đều đúng: người dùng gửi đúng thông điệp và giao dịch được ký bởi chính chủ sở hữu. Nếu một trong hai điều kiện không thỏa mãn, toàn bộ giao dịch sẽ bị từ chối.
 
-Khối else(\_) { fail } xử lý các trường hợp không phải là hành động spend. Trong bối cảnh này, contract chỉ cho phép tiêu UTxO và từ chối mọi hành động khác, giúp đơn giản hóa logic và tăng tính an toàn.
+Khối `else(\_) { fail }` xử lý các trường hợp không phải là hành động spend. Trong bối cảnh này, contract chỉ cho phép tiêu UTxO và từ chối mọi hành động khác, giúp đơn giản hóa logic và tăng tính an toàn.
 
 Tổng thể, validator này minh họa rõ cách một smart contract trong Aiken kiểm soát giao dịch thông qua việc kết hợp dữ liệu từ Datum, Redeemer và thông tin của Transaction. Đây là nền tảng quan trọng để xây dựng các logic phức tạp hơn như kiểm soát dòng tiền, phân quyền hoặc xử lý các kịch bản tương tác trong ứng dụng thực tế như TipJar trên Hydra.
 
@@ -207,7 +207,7 @@ test test_failed_hello_world_incorrect_redeemer() {
 }
 ```
 
-Trong test case test_failed_hello_world_incorrect_redeemer, chúng ta mô phỏng một giao dịch không hợp lệ nhằm kiểm tra xem smart contract có từ chối đúng các hành động sai hay không. Cụ thể, Datum vẫn được khởi tạo với owner hợp lệ thông qua mock_pub_key_hash(0), đảm bảo rằng quyền sở hữu là chính xác. Transaction cũng được tạo bằng mock_tx(True), nghĩa là giao dịch vẫn có chữ ký hợp lệ của owner.
+Trong test case `test_failed_hello_world_incorrect_redeemer`, chúng ta mô phỏng một giao dịch không hợp lệ nhằm kiểm tra xem smart contract có từ chối đúng các hành động sai hay không. Cụ thể, Datum vẫn được khởi tạo với owner hợp lệ thông qua mock_pub_key_hash(0), đảm bảo rằng quyền sở hữu là chính xác. Transaction cũng được tạo bằng mock_tx(True), nghĩa là giao dịch vẫn có chữ ký hợp lệ của owner.
 
 Tuy nhiên, điểm khác biệt nằm ở Redeemer. Thay vì sử dụng thông điệp "Hello, World!" như yêu cầu của validator, test case này cung cấp "GM World!". Đây là một thông điệp không hợp lệ và không thỏa mãn điều kiện logic đã được định nghĩa trong smart contract.
 
@@ -223,7 +223,7 @@ Sau khi chạy lệnh:
 aiken check
 ```
 
-kết quả cho thấy test test_failed_hello_world_incorrect_redeemer được đánh dấu PASS, xác nhận rằng smart contract đã hoạt động đúng khi từ chối giao dịch có Redeemer không hợp lệ. Đồng thời, các test khác cũng PASS và không có lỗi hay cảnh báo nào:
+kết quả cho thấy test `test_failed_hello_world_incorrect_redeemer` được đánh dấu PASS, xác nhận rằng smart contract đã hoạt động đúng khi từ chối giao dịch có Redeemer không hợp lệ. Đồng thời, các test khác cũng PASS và không có lỗi hay cảnh báo nào:
 
 ```bash
 Testing ...
@@ -241,7 +241,7 @@ Kết quả này chứng minh rằng validator không chỉ xử lý đúng các
 
 ##### ❌ Test case 3: Thiếu chữ ký (Missing Signer)
 
-Trong test case test_failed_hello_world_without_signer, chúng ta mô phỏng một giao dịch không hợp lệ nhằm kiểm tra cơ chế xác thực quyền sở hữu của smart contract. Cụ thể, Datum vẫn được khởi tạo với owner hợp lệ thông qua mock_pub_key_hash(0), và Redeemer cũng chứa đúng thông điệp "Hello, World!", hoàn toàn thỏa mãn điều kiện về dữ liệu đầu vào.
+Trong test case `test_failed_hello_world_without_signer`, chúng ta mô phỏng một giao dịch không hợp lệ nhằm kiểm tra cơ chế xác thực quyền sở hữu của smart contract. Cụ thể, Datum vẫn được khởi tạo với owner hợp lệ thông qua mock_pub_key_hash(0), và Redeemer cũng chứa đúng thông điệp "Hello, World!", hoàn toàn thỏa mãn điều kiện về dữ liệu đầu vào.
 
 ```
 test test_failed_hello_world_without_signer() {
@@ -268,7 +268,7 @@ Sau khi chạy lệnh:
 aiken check
 ```
 
-kết quả cho thấy test test_failed_hello_world_incorrect_redeemer được đánh dấu PASS, xác nhận rằng smart contract đã hoạt động đúng khi từ chối giao dịch có Redeemer không hợp lệ. Đồng thời, các test khác cũng PASS và không có lỗi hay cảnh báo nào:
+kết quả cho thấy test `test_failed_hello_world_incorrect_redeemer` được đánh dấu PASS, xác nhận rằng smart contract đã hoạt động đúng khi từ chối giao dịch có Redeemer không hợp lệ. Đồng thời, các test khác cũng PASS và không có lỗi hay cảnh báo nào:
 
 ```bash
 Testing ...
@@ -292,7 +292,7 @@ Sau khi hoàn thành việc viết smart contract và các test case, bước ti
 aiken check
 ```
 
-Khi lệnh này được thực thi, Aiken sẽ tiến hành biên dịch smart contract, thu thập và chạy tất cả các test case. Kết quả trả về sẽ cho biết có bao nhiêu test đã được thực hiện, có bao nhiêu test thành công (PASS) và có bao nhiêu test thất bại (FAIL). Ngoài ra, nếu có lỗi cú pháp hoặc lỗi logic nào trong mã nguồn, chúng cũng sẽ được hiển thị rõ ràng để lập trình viên có thể dễ dàng xác định và sửa chữa.
+Khi lệnh này được thực thi, Aiken sẽ tiến hành biên dịch smart contract, thu thập và chạy tất cả các test case. Kết quả trả về sẽ cho biết có bao nhiêu test đã được thực hiện, có bao nhiêu test thành công (PASS) và có bao nhiêu test thất bại (`FAIL`). Ngoài ra, nếu có lỗi cú pháp hoặc lỗi logic nào trong mã nguồn, chúng cũng sẽ được hiển thị rõ ràng để lập trình viên có thể dễ dàng xác định và sửa chữa.
 
 ```bash
       Testing ...

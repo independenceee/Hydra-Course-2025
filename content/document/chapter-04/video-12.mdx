@@ -254,7 +254,7 @@ else(_) {
 
 Ngoài hai trường hợp hợp lệ là Tip và Claim trong ngữ cảnh spend, validator chủ động từ chối tất cả các mục đích sử dụng khác thông qua nhánh else. Trong Aiken, mỗi validator có thể được gọi trong nhiều “context” khác nhau (spend, mint, withdraw, cert…), nhưng trong thiết kế TipJar, chúng ta chỉ cho phép sử dụng trong ngữ cảnh tiêu thụ UTxO (spend).
 
-Câu lệnh fail ở đây đóng vai trò như một “cổng chặn cuối cùng”: bất kỳ giao dịch nào không khớp với các điều kiện đã định nghĩa trước đó sẽ bị từ chối ngay lập tức.
+Câu lệnh `fail` ở đây đóng vai trò như một “cổng chặn cuối cùng”: bất kỳ giao dịch nào không khớp với các điều kiện đã định nghĩa trước đó sẽ bị từ chối ngay lập tức.
 
 ➡️ Cụ thể, các hành vi bị chặn bao gồm:
 
@@ -270,7 +270,7 @@ Câu lệnh fail ở đây đóng vai trò như một “cổng chặn cuối c�
 
 Trong phát triển smart contract, nguyên tắc quan trọng là: “Chỉ cho phép những gì được định nghĩa rõ ràng, và từ chối tất cả phần còn lại.”
 
-➡️ Đoạn else { fail } chính là cách hiện thực hóa nguyên tắc đó một cách đơn giản nhưng cực kỳ hiệu quả.
+➡️ Đoạn `else { fail }` chính là cách hiện thực hóa nguyên tắc đó một cách đơn giản nhưng cực kỳ hiệu quả.
 
 ### 3. Kiểm thử và Triển khai
 
@@ -496,7 +496,7 @@ expect Some(script_output) = list.head(script_outputs)`
 Trong trường hợp này, vì không có output nào mang địa chỉ của script, nên script_outputs sẽ là danh sách rỗng. Khi đó:
 
 - list.length(script_outputs) == 0
-- Điều kiện == 1 bị vi phạm → Validator sẽ fail ngay lập tức
+- Điều kiện == 1 bị vi phạm → Validator sẽ `fail` ngay lập tức
 
 ➡️ Điều này cho thấy validator không chỉ kiểm tra giá trị, mà còn kiểm soát chặt chẽ dòng chảy của tài sản.
 
