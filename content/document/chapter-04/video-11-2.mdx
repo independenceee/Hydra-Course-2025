@@ -62,7 +62,7 @@ Sự kết hợp giữa Datum và Redeemer cho phép smart contract kiểm soát
 
 Trong mô hình eUTxO (Extended UTxO) của Cardano, mỗi UTxO không chỉ đơn thuần chứa giá trị như ADA hoặc token mà còn có thể đi kèm một phần dữ liệu tùy chỉnh gọi là Datum. Datum đóng vai trò như “trạng thái” (state) của smart contract tại thời điểm UTxO đó tồn tại. Trong đoạn mã trên, Datum được định nghĩa với cấu trúc rất đơn giản:
 
-```aiken
+```ak
 pub type Datum {
   owner: VerificationKeyHash,
 }
@@ -78,7 +78,7 @@ Trong thực tế, khi một UTxO được tạo tại địa chỉ của smart 
 
 Trong mô hình eUTxO của Cardano, bên cạnh Datum (dữ liệu gắn với UTxO), còn có một thành phần quan trọng khác là Redeemer. Nếu Datum đại diện cho trạng thái hiện tại, thì Redeemer chính là hành động hoặc ý định của người dùng khi muốn tiêu (spend) UTxO đó. Trong đoạn mã trên, Redeemer được định nghĩa như sau:
 
-```aiken
+```ak
 pub type Redeemer {
   msg: ByteArray,
 }
@@ -96,7 +96,7 @@ Tóm lại, nếu Datum là “dữ liệu tĩnh” gắn với UTxO, thì Redee
 
 Validator là phần cốt lõi của smart contract, nơi định nghĩa toàn bộ logic xác thực giao dịch. Trong đoạn mã dưới đây, validator hello_world quy định các điều kiện mà một giao dịch phải thỏa mãn để có thể tiêu (spend) một UTxO:
 
-```aiken
+```ak
 validator hello_world {
 
   spend(
@@ -135,7 +135,7 @@ Tổng thể, validator này minh họa rõ cách một smart contract trong Aik
 
 Để đảm bảo smart contract hoạt động chính xác, ta tiến hành kiểm thử bằng cách mô phỏng các tình huống khác nhau của giao dịch. Mỗi test case dưới đây đại diện cho một kịch bản cụ thể, giúp xác minh từng điều kiện trong validator.
 
-```aiken
+```ak
 fn mock_tx(is_owner_signed: Bool) -> Transaction {
   mocktail_tx()
     |> required_signer_hash(is_owner_signed, mock_pub_key_hash(0))
@@ -155,7 +155,7 @@ Nhờ hàm mock_tx, việc kiểm thử trở nên linh hoạt và rõ ràng hơ
 
 Trong test case này, chúng ta kiểm tra kịch bản lý tưởng nhất, nơi người dùng gửi đúng thông điệp "Hello, World!" và giao dịch được ký bởi chính chủ sở hữu (owner) của UTxO. Đây là tình huống mà validator sẽ chấp nhận và cho phép tiêu UTxO.
 
-```aiken
+```ak
 test test_hello_world() {
   let datum = Some(Datum { owner: mock_pub_key_hash(0) })
   let redeemer = Redeemer { msg: "Hello, World!" }
@@ -200,7 +200,7 @@ Tổng thể, kết quả kiểm thử cho thấy smart contract đã được x
 
 Trong kịch bản này, người dùng vẫn ký giao dịch hợp lệ với tư cách là owner, nhưng thông điệp trong Redeemer không đúng với yêu cầu "Hello, World!". Điều này mô phỏng tình huống một người cố gắng tương tác với contract nhưng không cung cấp dữ liệu đầu vào chính xác.
 
-```aiken
+```ak
 test test_failed_hello_world_incorrect_redeemer() {
   let datum = Some(Datum { owner: mock_pub_key_hash(0) })
   let redeemer = Redeemer { msg: "GM World!" }
@@ -245,7 +245,7 @@ Kết quả này chứng minh rằng validator không chỉ xử lý đúng các
 
 Trong test case test_failed_hello_world_without_signer, chúng ta mô phỏng một giao dịch không hợp lệ nhằm kiểm tra cơ chế xác thực quyền sở hữu của smart contract. Cụ thể, Datum vẫn được khởi tạo với owner hợp lệ thông qua mock_pub_key_hash(0), và Redeemer cũng chứa đúng thông điệp "Hello, World!", hoàn toàn thỏa mãn điều kiện về dữ liệu đầu vào.
 
-```aiken
+```ak
 test test_failed_hello_world_without_signer() {
   let datum = Some(Datum { owner: mock_pub_key_hash(0) })
   let redeemer = Redeemer { msg: "Hello, World!" }
@@ -311,7 +311,7 @@ Khi lệnh này được thực thi, Aiken sẽ tiến hành biên dịch smart 
 
 Nếu tất cả các test case đều PASS và không có lỗi nào được phát hiện, điều này chứng tỏ rằng smart contract đã được xây dựng đúng logic và sẵn sàng để triển khai hoặc tích hợp vào các hệ thống lớn hơn như ứng dụng TipJar trên Hydra. Ngược lại, nếu có bất kỳ test nào thất bại hoặc có lỗi được phát hiện, lập trình viên sẽ cần phải xem xét lại mã nguồn, xác định nguyên nhân và thực hiện các sửa chữa cần thiết trước khi tiếp tục.
 
-```aiken
+```ak
 aiken build
 ```
 

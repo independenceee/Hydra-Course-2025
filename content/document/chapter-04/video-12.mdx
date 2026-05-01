@@ -56,7 +56,7 @@ Tóm lại, thiết kế của TipJar tập trung vào việc giữ cho logic c�
 
 Dưới đây là smart contract TipJar hoàn chỉnh, sau đó chúng ta sẽ đi qua từng phần để hiểu rõ cách nó hoạt động:
 
-```aiken
+```ak
 validator tipjar(owner: VerificationKeyHash, minimum_tip: Int) {
   spend(
     _datum_option: Option<Datum>,
@@ -136,7 +136,7 @@ Sau đó, từ script_input, chúng ta truy xuất: `let script_address = script
 
 #### Kiểm soát output quay lại contract
 
-```aiken
+```ak
 let script_outputs = find_script_outputs(outputs, script_address)
 
 expect list.length(script_outputs) == 1
@@ -169,7 +169,7 @@ Validator sử dụng redeemer để phân biệt hành động: gửi tiền (T
 
 1. 🟢 Trường hợp Tip – Gửi tiền
 
-```aiken
+```ak
 Tip ->
   lovelace_of(script_output.value) >= lovelace_of(
     script_input.output.value,
@@ -215,7 +215,7 @@ Gây mất tính nhất quán của dữ liệu on-chain
 
 2. 🟢 Trường hợp Claim – Rút tiền
 
-```aiken
+```ak
 Claim -> verify_signature(extra_signatories, owner)
 ```
 
@@ -248,7 +248,7 @@ Một điểm đáng chú ý là trong trường hợp Claim, validator không y
 
 3. 🚫 Ngăn chặn các hành vi không hợp lệ
 
-```aiken
+```ak
 else(_) {
   fail
 }
@@ -283,7 +283,7 @@ Sau khi kiểm thử thành công, chúng ta sẽ triển khai smart contract l�
 
 Trong test case này, chúng ta tiến hành kiểm tra một trong những hành vi quan trọng nhất của smart contract TipJar, đó là khả năng chấp nhận một giao dịch tip hợp lệ. Đây là kịch bản đại diện cho luồng sử dụng chính của hệ thống, nơi người dùng gửi một lượng ADA vào contract và làm tăng giá trị của TipJar theo đúng quy định.
 
-```aiken
+```ak
 test tip_accepts_valid_transaction() {
   let redeemer = Tip
   let datum =
@@ -369,7 +369,7 @@ Kết quả này có ý nghĩa rất quan trọng: nó xác nhận rằng logic 
 
 Trong test case này, chúng ta kiểm tra một tình huống quan trọng về mặt bảo mật và tính đúng đắn của hệ thống: đảm bảo rằng validator không chấp nhận các giao dịch tip không làm tăng giá trị của TipJar theo đúng ngưỡng minimum_tip. Đây là một kịch bản “negative case”, giúp xác minh rằng contract không chỉ hoạt động đúng khi hợp lệ mà còn từ chối chính xác các hành vi sai.
 
-```aiken
+```ak
 test tip_rejects_insufficient_tip() {
   let redeemer = Tip
   let datum =
@@ -453,7 +453,7 @@ Tóm lại, test case này chứng minh rằng contract không chỉ hoạt đ�
 
 Trong test case này, chúng ta (kiểm tra) một tình huống rất quan trọng liên quan đến tính toàn vẹn của trạng thái contract: đảm bảo rằng mọi giao dịch tip phải duy trì TipJar bằng cách gửi lại tài sản về đúng địa chỉ script. Nếu không có ràng buộc này, người dùng có thể lợi dụng hành vi “tip” để thực chất rút tiền ra khỏi contract.
 
-```aiken
+```ak
 test tip_but_wrong_address() {
   let redeemer = Tip
   let datum =
@@ -539,7 +539,7 @@ Tóm lại, test case này chứng minh rằng validator đã kiểm soát đún
 
 Trong test case này, chúng ta (kiểm tra) luồng xử lý thứ hai của smart contract TipJar, đó là hành động rút tiền (Claim) bởi chủ sở hữu. Đây là chức năng quan trọng đảm bảo rằng số tiền tích lũy trong TipJar cuối cùng có thể được thu hồi một cách hợp lệ bởi đúng người có quyền.
 
-```aiken
+```ak
 test claim_tip_success() {
   let redeemer = Claim
   let datum =
@@ -618,7 +618,7 @@ Tóm lại, test case này xác nhận rằng owner có thể rút tiền một 
 
 Trong test case cuối cùng này, chúng ta যাচ (kiểm tra) một tình huống cực kỳ quan trọng về mặt bảo mật: đảm bảo rằng chỉ chủ sở hữu (owner) mới có quyền rút tiền, và mọi thực thể khác đều bị từ chối. Đây là phần bổ sung trực tiếp cho test case trước đó, nhằm xác nhận rằng cơ chế kiểm soát quyền truy cập của contract hoạt động chặt chẽ trong cả hai chiều: cho phép đúng người và từ chối sai người.
 
-```aiken
+```ak
 test claim_tip_not_owner() {
   let redeemer = Claim
   let datum =
